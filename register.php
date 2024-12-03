@@ -6,13 +6,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = htmlspecialchars($_POST['email']);
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-    // Check if username or email already exists
     $checkUser = $pdo->prepare("SELECT * FROM users WHERE username = ? OR email = ?");
     $checkUser->execute([$username, $email]);
     if ($checkUser->fetch()) {
         echo "<div class='alert alert-danger' role='alert'>Username or Email already exists. Please choose another.</div>";
     } else {
-        // Insert new user into the database
         $sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
         $stmt = $pdo->prepare($sql);
         if ($stmt->execute([$username, $email, $password])) {

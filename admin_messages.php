@@ -71,7 +71,7 @@ $messages = $pdo->query("SELECT * FROM messages ORDER BY created_at DESC")->fetc
                     <td><?= htmlspecialchars($message['message_id']) ?></td>
                     <td><?= htmlspecialchars($message['user_email']) ?></td>
                     <td><?= htmlspecialchars($message['subject']) ?></td>
-                    <td><?= substr(htmlspecialchars($message['message']), 0, 50) . '...' ?></td> <!-- Show message preview -->
+                    <td><?= substr(htmlspecialchars($message['message']), 0, 50) . '...' ?></td> 
                     <td><?= htmlspecialchars($message['created_at']) ?></td>
                     <td>
                         <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#messageModal<?= $message['message_id'] ?>">View</button>

@@ -6,19 +6,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = htmlspecialchars($_POST['username']);
     $password = $_POST['password'];
 
-    // Retrieve user from database
     $sql = "SELECT user_id, username, password, is_admin FROM users WHERE username = ?";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$username]);
     $user = $stmt->fetch();
 
     if ($user && password_verify($password, $user['password'])) {
-        session_regenerate_id(true); // Security measure against session hijacking
+        session_regenerate_id(true);
         $_SESSION['user_id'] = $user['user_id'];
         $_SESSION['username'] = $user['username'];
         $_SESSION['is_admin'] = $user['is_admin'];
 
-        // Redirect based on user role
         if ($user['is_admin']) {
             header("Location: admin_dashboard.php");
         } else {
@@ -41,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <style>
         body {
             background-color: #f8f9fa;
-            padding-top: 70px; /* Space for fixed navbar */
+            padding-top: 70px;
         }
         .container {
             max-width: 400px;

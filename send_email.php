@@ -7,13 +7,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $subject = htmlspecialchars($_POST['subject']);
     $message = htmlspecialchars($_POST['message']);
 
-    // Validate email address
     if (!filter_var($userEmail, FILTER_VALIDATE_EMAIL)) {
         echo "Invalid email address.";
         exit();
     }
 
-    // Insert the message into the database
     $stmt = $pdo->prepare("INSERT INTO messages (user_email, subject, message) VALUES (?, ?, ?)");
     if ($stmt->execute([$userEmail, $subject, $message])) {
         echo "<h1>Message Sent Successfully!</h1>";
